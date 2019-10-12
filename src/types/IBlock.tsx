@@ -2,7 +2,7 @@ export enum State{
     ACTIVE,
     BLOCKED
 }
-export interface Block {
+export interface IBlock {
     image: String;
     activePosition: number;
     originPosition: number;
