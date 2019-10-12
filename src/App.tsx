@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 let elements = Array.from(Array(6).keys());
-let blocks: IBlock[] = elements.map((element: number): IBlock => {
+const blocks: IBlock[] = elements.map((element: number): IBlock => {
     return {
         image: `${element}.jpg`,
         originPosition: element,
@@ -34,7 +34,7 @@ let blocks: IBlock[] = elements.map((element: number): IBlock => {
         state: State.ACTIVE
     }
 });
-let gameObj: Game = {
+const gameObj: Game = {
     selectedIndex: null,
     id: 1,
     name: 'Pałac kultury',
@@ -47,11 +47,15 @@ const App: React.FC = () => {
     const service = usePostGameService(get(window, 'hwPlaceId', null));
     const classes = useStyles();
 
-    const select = (index: number):void => {
-        let newGame = selectElement(game, index);
-        console.log(newGame);
+    const select = (block: IBlock):void => {
+        if(block.state === State.BLOCKED){
+            alert("Element in correct place");
+            return;
+        }
+        let newGame = selectElement(game, block.activePosition);
         setGame(newGame);
     };
+
     return (
         <div className={classes.root}>
             {service.status === Request.LOADING && <div>Loading...</div>}

@@ -6,7 +6,7 @@ import {Grid} from "@material-ui/core";
 
 interface GameContainerProps {
     game: Game,
-    fnClick: (_: number) => void,
+    fnClick: (_: IBlock) => void,
 }
 
 const GameContainer: React.FC<GameContainerProps> = ({game, fnClick}) => {
@@ -21,7 +21,7 @@ const GameContainer: React.FC<GameContainerProps> = ({game, fnClick}) => {
         >
             {blocks.map((block: IBlock) => {
                 return (
-                    <Block key={block.originPosition} block={block} selected={game.selectedIndex}
+                    <Block key={block.image} block={block} selected={game.selectedIndex}
                            fnClick={fnClick}/>
                 );
             })}

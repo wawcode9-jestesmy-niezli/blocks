@@ -3,9 +3,9 @@ export enum State{
     BLOCKED
 }
 export interface IBlock {
-    image: String;
+    readonly image: string;
     activePosition: number;
-    originPosition: number;
+    readonly originPosition: number;
     state?: State
 };
 

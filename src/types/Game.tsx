@@ -7,33 +7,29 @@ export interface Game {
     blocks: IBlock[]
 }
 
-const move = (blocks: IBlock[], oldIndex: number|null, newIndex: number|null) => {
+const move = (blocks: IBlock[], oldIndex: number | null, newIndex: number | null) => {
     if (oldIndex === null || newIndex === null) {
         return blocks;
     }
-    while (oldIndex < 0) {
-        oldIndex += blocks.length;
-    }
-    while (newIndex < 0) {
-        newIndex += blocks.length;
-    }
-    blocks.splice(newIndex, 0, blocks.splice(oldIndex, 1)[0]);
-    blocks[newIndex].activePosition = newIndex;
-    if(blocks[newIndex].activePosition === blocks[newIndex].originPosition){
-        blocks[newIndex].state = State.BLOCKED;
-    }
-    return blocks;
+    let firstElement = blocks[newIndex];
+    let secondElement = blocks[oldIndex];
+    firstElement.activePosition = oldIndex;
+    secondElement.activePosition = newIndex;
+    blocks[oldIndex] = firstElement;
+    blocks[newIndex] = secondElement;
+    return blocks.map((element:IBlock):IBlock => {
+        element.state = element.activePosition === element.originPosition ? State.BLOCKED : State.ACTIVE;
+        return element;
+    });
 };
 
 export const selectElement = (game: Game, index: number): Game => {
-    console.log(game.selectedIndex);
-    if (game.selectedIndex != null && game.selectedIndex !== index) {
-        game.blocks = move(game.blocks, game.selectedIndex, index);
-        game.blocks = move(game.blocks, index + 1, game.selectedIndex);
-        game.selectedIndex = null;
-    }else{
-        game.selectedIndex = index;
+    let {selectedIndex, blocks} = game;
+    if (selectedIndex != null && selectedIndex !== index) {
+        blocks = move(blocks, selectedIndex, index);
+        selectedIndex = null;
+    } else {
+        selectedIndex = index;
     }
-
-    return game;
+    return {...game, selectedIndex, blocks};
 };
