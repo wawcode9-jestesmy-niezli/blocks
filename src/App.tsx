@@ -47,8 +47,9 @@ const App: React.FC = () => {
     const service = usePostGameService(get(window, 'hwPlaceId', null));
     const classes = useStyles();
 
-    const select = (index: number) => {
+    const select = (index: number):void => {
         let newGame = selectElement(game, index);
+        console.log(newGame);
         setGame(newGame);
     };
     return (
@@ -61,7 +62,7 @@ const App: React.FC = () => {
             {service.status === Request.ERROR && (
                 <div>Error, the backend moved to the dark side.</div>
             )}
-            <GameContainer game={game} fnReorder={select}/>
+            {game && <GameContainer game={game} fnClick={select}/>}
         </div>
     );
 };

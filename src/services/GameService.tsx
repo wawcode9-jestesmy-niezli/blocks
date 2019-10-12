@@ -13,7 +13,7 @@ const usePostGameService = (id: number) => {
             .then(response => response.json())
             .then(response => setResult({status: Request.LOADED, payload: response}))
             .catch(error => setResult({status: Request.ERROR, error}));
-    }, []);
+    }, [id]);
 
     return result;
 };

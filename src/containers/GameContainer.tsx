@@ -1,15 +1,15 @@
 import * as React from "react";
-import {Game, selectElement} from "../types/Game";
+import {Game} from "../types/Game";
 import {IBlock} from "../types/IBlock";
 import Block from "../components/Block";
 import {Grid} from "@material-ui/core";
 
 interface GameContainerProps {
     game: Game,
-    fnReorder: any,
+    fnClick: (_: number) => void,
 }
 
-const GameContainer: React.FC<GameContainerProps> = ({game, fnReorder}) => {
+const GameContainer: React.FC<GameContainerProps> = ({game, fnClick}) => {
     const {blocks} = game;
     return (
         <Grid
@@ -19,9 +19,10 @@ const GameContainer: React.FC<GameContainerProps> = ({game, fnReorder}) => {
             alignItems="center"
             spacing={1}
         >
-            {blocks.map((block: IBlock, key: number) => {
+            {blocks.map((block: IBlock) => {
                 return (
-                    <Block block={block} selected={game.selectedIndex} fnOnclick={() => fnReorder(game, key)}/>
+                    <Block key={block.originPosition} block={block} selected={game.selectedIndex}
+                           fnClick={fnClick}/>
                 );
             })}
 

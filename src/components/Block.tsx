@@ -18,16 +18,17 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface CardProps {
     block: IBlock;
-    selected?: number|null;
-    fnOnclick: any;
+    selected?: number | null;
+    fnClick: (_: number) => void;
 }
-const Block: React.FC<CardProps> = ({block, selected, fnOnclick}) => {
+
+const Block: React.FC<CardProps> = ({block, selected, fnClick}) => {
     const classes = useStyles();
     return (
-        <Grid item xs={2} key={block.originPosition}>
+        <Grid item xs={2}>
             <Box height={50} width="100%"
                  className={selected === block.activePosition ? classes.selected : classes.element}
-                 onClick={fnOnclick}>
+                 onClick={()=>fnClick(block.activePosition)}>
                 <Box height="100%" bgcolor="grey.300" mx={0.5} width={50} display="inline-block">
                     {block.originPosition}
                 </Box>
