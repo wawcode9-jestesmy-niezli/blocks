@@ -28,7 +28,7 @@ const blocks: IBlock[] = elements.map((element: number): IBlock => {
 });
 let usedElements: number[] = [];
 const getFreePosition = () => {
-    let number = random(0, blocks.length-1);
+    let number = random(0, blocks.length - 1);
     if (!usedElements.includes(number)) {
         usedElements.push(number);
     } else {
@@ -64,14 +64,10 @@ const App: React.FC = () => {
     return (
         <div className={classes.root}>
             {service.status === Request.LOADING && <div>Loading...</div>}
-            {service.status === Request.LOADED &&
-            service.payload.blocks.map(block => (
-                <div key={block.originPosition}>{block.originPosition}</div>
-            ))}
+            {service.status === Request.LOADED && <GameContainer game={service.payload} fnClick={select}/>}
             {service.status === Request.ERROR && (
                 <div>Error, the backend moved to the dark side.</div>
             )}
-            <GameContainer game={game} fnClick={select}/>
         </div>
     );
 };
