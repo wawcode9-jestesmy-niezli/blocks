@@ -61,7 +61,6 @@ const Block: React.FC<CardProps> = ({block, selected, fnClick}) => {
     return (
         <Grid item xs={2} key={block.image}
               className={getClassName()}
-              style={{backgroundImage: `url('http://localhost:3000/test.jpg')`}}
               onClick={() => fnClick(block)}>
             {block.activePosition} - {block.originPosition}
         </Grid>
