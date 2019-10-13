@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Request, Service} from '../types/Service';
-import {Game} from "../types/Game";
+import {checkGame, Game} from "../types/Game";
 
 const API_URL = 'https://localhost:3000/api/game/:id';
 const usePostGameService = (id: number) => {
@@ -11,7 +11,7 @@ const usePostGameService = (id: number) => {
     useEffect(() => {
         fetch(API_URL.replace(":id", `${id}`))
             .then(response => response.json())
-            .then(response => setResult({status: Request.LOADED, payload: response}))
+            .then(response => setResult({status: Request.LOADED, payload: checkGame(response)}))
             .catch(error => setResult({status: Request.ERROR, error}));
     }, [id]);
 

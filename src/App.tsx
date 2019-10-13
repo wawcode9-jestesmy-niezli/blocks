@@ -5,7 +5,7 @@ import usePostGameService from "./services/GameService";
 import {Request} from "./types/Service";
 import {IBlock, State} from "./types/IBlock";
 import {get, random, sortBy} from "lodash";
-import {Game, selectElement} from "./types/Game";
+import {checkGame, Game, selectElement} from "./types/Game";
 import GameContainer from "./containers/GameContainer";
 
 
@@ -28,7 +28,7 @@ const blocks: IBlock[] = elements.map((element: number): IBlock => {
 });
 let usedElements: number[] = [];
 const getFreePosition = () => {
-    let number = random(0, blocks.length);
+    let number = random(0, blocks.length-1);
     if (!usedElements.includes(number)) {
         usedElements.push(number);
     } else {
@@ -40,6 +40,7 @@ const gameObj: Game = {
     selectedIndex: null,
     id: 1,
     name: 'Pałac kultury',
+    moved: 0,
     blocks: sortBy(blocks.map((block: IBlock): IBlock => {
         block.activePosition = getFreePosition();
         return block;
@@ -48,7 +49,7 @@ const gameObj: Game = {
 
 
 const App: React.FC = () => {
-    const [game, setGame] = useState<Game>(gameObj);
+    const [game, setGame] = useState<Game>(checkGame(gameObj));
     const service = usePostGameService(get(window, 'hwPlaceId', null));
     const classes = useStyles();
     const select = (block: IBlock): void => {
