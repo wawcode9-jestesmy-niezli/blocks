@@ -4,6 +4,7 @@ import {IBlock} from "../types/IBlock";
 import Block from "../components/Block";
 import {Grid} from "@material-ui/core";
 import "../App.css";
+import AlertContainer from "./AlertContainer";
 
 interface GameContainerProps {
     game: Game|undefined,
@@ -29,17 +30,13 @@ const GameContainer: React.FC<GameContainerProps> = ({game, fnClick}) => {
             >
                 {blocks.map((block: IBlock) => {
                     return (
-                        <Block key={block.image} block={block} selected={game.selectedIndex} fnClick={fnClick}/>
+                        <Block key={block.image} block={block} selected={game.selectedIndex} fnClick={fnClick} completed={game.completed}/>
                     );
                 })}
 
             </Grid>
-            {game.completed && <span>
-                Gratulacje udało Ci się ułożyć miejsce, możesz podzielić się tym
-
-            </span>}
+            {game.completed && <AlertContainer/>}
             <div>Ilość ruchów: {game.moved}</div>
-
         </React.Fragment>
     )
 };

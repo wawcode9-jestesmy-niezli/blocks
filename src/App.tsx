@@ -33,7 +33,7 @@ const App: React.FC = () => {
         setGame(newGame);
     };
     useEffect(() => {
-        if(service.status === Request.LOADED){
+        if (service.status === Request.LOADED) {
             setGame(service.payload);
         }
     }, [service]);

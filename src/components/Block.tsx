@@ -35,6 +35,13 @@ const useStyles = makeStyles((theme: Theme) =>
             height: "15vw",
             cursor: "no-drop",
             backgroundSize: "cover",
+        },
+        done: {
+            textAlign: 'center',
+            width: "20vw",
+            height: "20vw",
+            cursor: "no-drop",
+            backgroundSize: "cover",
         }
     }),
 );
@@ -43,9 +50,10 @@ interface CardProps {
     block: IBlock;
     selected?: number | null;
     fnClick: (_: IBlock) => void;
+    completed?: boolean;
 }
 
-const Block: React.FC<CardProps> = ({block, selected, fnClick}) => {
+const Block: React.FC<CardProps> = ({block, selected, fnClick, completed}) => {
     const classes = useStyles();
     const getClassName = () => {
         let style = classes.element;
@@ -63,7 +71,6 @@ const Block: React.FC<CardProps> = ({block, selected, fnClick}) => {
               className={getClassName()}
               style={{backgroundImage: `url(https://hiwarsaw.herokuapp.com${block.image}`}}
               onClick={() => fnClick(block)}>
-            {block.activePosition} - {block.originPosition}
         </Grid>
     );
 };
