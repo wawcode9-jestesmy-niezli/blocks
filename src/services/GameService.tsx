@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {Request, Service} from '../types/Service';
 import {checkGame, Game} from "../types/Game";
 
-const API_URL = 'https://localhost:3000/api/game/:id';
+const API_URL = 'https://hiwarsaw.herokuapp.com/api-place/:id';
 const usePostGameService = (id: number) => {
     const [result, setResult] = useState<Service<Game>>({
         status: Request.INIT
