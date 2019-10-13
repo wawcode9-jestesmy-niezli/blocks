@@ -21,8 +21,7 @@ const GameContainer: React.FC<GameContainerProps> = ({game, fnClick}) => {
         >
             {blocks.map((block: IBlock) => {
                 return (
-                    <Block key={block.image} block={block} selected={game.selectedIndex}
-                           fnClick={fnClick}/>
+                    <Block key={block.image} block={block} selected={game.selectedIndex} fnClick={fnClick}/>
                 );
             })}
 
