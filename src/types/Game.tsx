@@ -13,11 +13,12 @@ const move = (blocks: IBlock[], oldIndex: number | null, newIndex: number | null
     }
     let firstElement = blocks[newIndex];
     let secondElement = blocks[oldIndex];
-    firstElement.activePosition = oldIndex;
-    secondElement.activePosition = newIndex;
+    // firstElement.activePosition = oldIndex;
+    // secondElement.activePosition = newIndex;
     blocks[oldIndex] = firstElement;
     blocks[newIndex] = secondElement;
-    return blocks.map((element:IBlock):IBlock => {
+    return blocks.map((element: IBlock, key: number): IBlock => {
+        element.activePosition = key;
         element.state = element.activePosition === element.originPosition ? State.BLOCKED : State.ACTIVE;
         return element;
     });
