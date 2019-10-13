@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 
 import usePostGameService from "./services/GameService";
 import {Request} from "./types/Service";
 import {IBlock, State} from "./types/IBlock";
-import {get, random, sortBy} from "lodash";
-import {checkGame, Game, selectElement} from "./types/Game";
+import {get} from "lodash";
+import {Game, selectElement} from "./types/Game";
 import GameContainer from "./containers/GameContainer";
 
 
@@ -17,42 +17,14 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-let elements = Array.from(Array(50).keys());
-const blocks: IBlock[] = elements.map((element: number): IBlock => {
-    return {
-        image: `${element}.jpg`,
-        originPosition: element,
-        activePosition: element,
-        state: State.ACTIVE
-    }
-});
-let usedElements: number[] = [];
-const getFreePosition = () => {
-    let number = random(0, blocks.length - 1);
-    if (!usedElements.includes(number)) {
-        usedElements.push(number);
-    } else {
-        number = getFreePosition();
-    }
-    return number;
-};
-const gameObj: Game = {
-    selectedIndex: null,
-    id: 1,
-    name: 'Pałac kultury',
-    moved: 0,
-    blocks: sortBy(blocks.map((block: IBlock): IBlock => {
-        block.activePosition = getFreePosition();
-        return block;
-    }), 'activePosition')
-};
-
-
 const App: React.FC = () => {
-    const [game, setGame] = useState<Game>(checkGame(gameObj));
+    const [game, setGame] = useState<Game>();
     const service = usePostGameService(get(window, 'hwPlaceId', null));
     const classes = useStyles();
     const select = (block: IBlock): void => {
+        if (!game) {
+            return;
+        }
         if (block.state === State.BLOCKED) {
             alert("Element in correct place");
             return;
@@ -60,11 +32,16 @@ const App: React.FC = () => {
         let newGame = selectElement(game, block.activePosition);
         setGame(newGame);
     };
+    useEffect(() => {
+        if(service.status === Request.LOADED){
+            setGame(service.payload);
+        }
+    }, [service]);
 
     return (
         <div className={classes.root}>
             {service.status === Request.LOADING && <div>Loading...</div>}
-            {service.status === Request.LOADED && <GameContainer game={service.payload} fnClick={select}/>}
+            {service.status === Request.LOADED && <GameContainer game={game} fnClick={select}/>}
             {service.status === Request.ERROR && (
                 <div>Error, the backend moved to the dark side.</div>
             )}

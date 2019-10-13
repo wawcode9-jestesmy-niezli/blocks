@@ -6,17 +6,17 @@ import {Grid} from "@material-ui/core";
 import "../App.css";
 
 interface GameContainerProps {
-    game: Game,
+    game: Game|undefined,
     fnClick: (_: IBlock) => void,
 }
 
 const GameContainer: React.FC<GameContainerProps> = ({game, fnClick}) => {
+    if(game === undefined){
+        return(
+            <span/>
+        )
+    }
     const {blocks} = game;
-
-    const fbShare = (e: MouseEvent): void => {
-        e.preventDefault();
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
-    };
 
     return (
         <React.Fragment>

@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         selected: {
             margin: "2px",
-            border: '1px solid #ff0000',
+            border: '2px solid #ff0000',
             textAlign: 'center',
             width: "15vw",
             height: "15vw",
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#fff"
         },
         element: {
-            margin: "2px",
+            margin: "3px",
             background: "#e3e3e3",
             textAlign: 'center',
             width: "15vw",
@@ -61,7 +61,7 @@ const Block: React.FC<CardProps> = ({block, selected, fnClick}) => {
     return (
         <Grid item xs={2} key={block.image}
               className={getClassName()}
-              style={{backgroundImage: `url(${block.image}`}}
+              style={{backgroundImage: `url(https://hiwarsaw.herokuapp.com${block.image}`}}
               onClick={() => fnClick(block)}>
             {block.activePosition} - {block.originPosition}
         </Grid>

@@ -9,7 +9,12 @@ const usePostGameService = (id: number) => {
     });
 
     useEffect(() => {
-        fetch(API_URL.replace(":id", `${id}`))
+        fetch(API_URL.replace(":id", `${id}`), {
+            mode: 'cors',
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
             .then(response => response.json())
             .then(response => setResult({status: Request.LOADED, payload: checkGame(response)}))
             .catch(error => setResult({status: Request.ERROR, error}));
