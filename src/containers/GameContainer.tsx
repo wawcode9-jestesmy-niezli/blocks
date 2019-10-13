@@ -14,8 +14,8 @@ const GameContainer: React.FC<GameContainerProps> = ({game, fnClick}) => {
     const {blocks} = game;
 
     const fbShare = (e: MouseEvent): void => {
-
-        window.open(link, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+        e.preventDefault();
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
     };
 
     return (
@@ -39,11 +39,7 @@ const GameContainer: React.FC<GameContainerProps> = ({game, fnClick}) => {
 
             </span>}
             <div>Ilość ruchów: {game.moved}</div>
-            <a onClick={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`}
-               title="Share on Facebook"
-               target="_blank"
-               className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--facebook">
-                <i className="fa fa-facebook fa-fw"/> Facebook</a>
+
         </React.Fragment>
     )
 };
